@@ -1,0 +1,51 @@
+.profile-container{
+    box-shadow: 0.1px 1px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+}
+
+.profile-container img{
+    border-radius: 50%;
+}
+
+
+.choose-file, #save-btn{
+    border: none;
+    background-color: rgb(12, 107, 12);
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+}
+#save-btn{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#remove-button{
+    border: 1px solid rgb(190, 20, 20);
+    background-color: white;
+    color: rgb(193, 26, 26);
+    border-radius: 5px;
+    padding: 4px;
+    margin: 5px;
+}
+
+#email, #fullName, #phone, #username{
+    width: 90%;
+    padding: 5px;
+    border: none;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+    
+}
+
+.flexb{
+    margin: 30px 0px 30px 0px;
+    display: flex;
+    flex-direction: row; 
+}
+
+.flexb div{
+    width: 50%;
+    /* padding-left: 50px; */
+}
