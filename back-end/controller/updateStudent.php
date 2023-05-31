@@ -1,7 +1,11 @@
 <?php
 include("../dal/DAO.php");
 session_start();
-$student = getById($_POST["id"], "student");
+if(isset($_POST["id"]))
+{
+    $_SESSION["st_id"] = $_POST["id"];
+}
+$student = getById($_SESSION["st_id"], "student");
 require_once("checklogin.php");
 ?>
 <!DOCTYPE html>
@@ -34,7 +38,7 @@ require_once("checklogin.php");
                 <div class="flexb">
                     <div>
                         <label for="fullName">Full Name:</label><br>
-                        <input type="text" id="fullName" name="fullName" value="<?php echo $student->fullName ?>" readonly>
+                        <input type="text" id="fullName" name="fullName" value="<?php echo $student->fullName ?>" required>
                     </div>
                     <div>
                         <label for="email">Email:</label><br>
@@ -49,10 +53,10 @@ require_once("checklogin.php");
                     </div>
                     <div>
                         <label for="username">Username:</label><br>
-                        <input type="text" id="username" name="username" value="<?php echo $student->username ?>" readonly><br><br>
+                        <input type="text" id="username" name="username" value="<?php echo $student->username ?>" required><br><br>
                     </div>
                 </div>
-                <input id="save-btn" type="submit" name="studentSave" value="Save">
+                <input id="save-btn" type="submit" name="saveAll" value="Save">
                 <?php
                 if (isset($_GET["error"]) && $_GET["error"] == 'invalidemail') {
                     echo "<span style='color: red'>Invalid email</span>";

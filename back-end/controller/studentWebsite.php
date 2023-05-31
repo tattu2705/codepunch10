@@ -2,7 +2,7 @@
 include("../dal/DAO.php");
 session_start();
 if (isset($_POST["st_dangnhap"])) {
-    $student = getStudentByLogin($_POST["username"], $_POST["password"]);
+    $student = getStudentByLogin($_POST["username"], md5($_POST["password"]));
     if ($student == null) {
         header("Location: login.php?msg=st_failed");
         exit();
@@ -30,7 +30,7 @@ require_once("checklogin.php");
 <body>
     <?php include('header.php') ?>
     <h1>Hello <?php echo $_SESSION["account"]->fullName; ?></h1>
-
+    
     <script src="../../font-end/js/studentWeb.js"></script>
     <script src="../../font-end/js/script.js"></script>
 </body>

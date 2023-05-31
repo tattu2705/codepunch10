@@ -2,6 +2,8 @@
 <?php
 include("../model/Student.php");
 include("../model/Teacher.php");
+include("../model/Homework.php");
+
 function getAll()
 {
     include("connectDB.php");
@@ -91,6 +93,50 @@ function getById($id, $type)
     return $person;
 }
 
+function updateAll($newEmail, $newPhone, $id, $type, $header, $name, $username_){
+    include('connectDB.php');
+
+    // Validate email format
+    if (!filter_var($newEmail, FILTER_VALIDATE_EMAIL)) {
+        header("Location: $header?error=invalidemail");
+        $conn->close();
+        exit();
+    }
+
+    // Validate phone number format
+    if (!preg_match("/^[0-9]{10}$/", $newPhone)) {
+        header("Location: $header?error=invalidphone");
+        $conn->close();
+        exit();
+    }
+
+    if(!preg_match("/^[a-zA-ZÀ-ỹ\s]{4,50}$/u", $name)){
+        header("Location: $header?error=invalidname");
+        $conn->close();
+        exit();
+    }
+
+    if(!preg_match("/^[a-zA-Z0-9_\-]{4,20}$/", $username_)){
+        header("Location: $header?error=invalidusername");
+        $conn->close();
+        exit();
+    }
+
+    if ($type == 'student') {
+        $sql = "UPDATE student_info SET email = ?, phoneNumber = ?, username = ?, name = ? WHERE id = ?";
+    } else {
+        $sql = "UPDATE teacher_info SET email = ?, phoneNumber = ?, username = ?, name = ? WHERE id = ?";
+    }
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssssi", $newEmail, $newPhone, $username_, $name, $id);
+    $stmt->execute();
+    $stmt->close();
+    $conn->close();
+    $_SESSION["account"] = getById($id, $_SESSION["account"]->type);
+    header("Location: {$header}?success=1");
+    exit();
+}
+
 function updateInfo($newEmail, $newPhone, $id, $type, $header)
 {
     include('connectDB.php');
@@ -127,7 +173,10 @@ function updatePassword($old_password, $new_password, $confirm_password)
 {
     include('connectDB.php');
     $id = $_SESSION["account"];
-    $stmt = $conn->prepare("SELECT * FROM student_info WHERE id=?");
+    if($_SESSION["account"]->type === "student")
+        $stmt = $conn->prepare("SELECT * FROM student_info WHERE id=?");
+    else
+        $stmt = $conn->prepare("SELECT * FROM teacher_info WHERE id=?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
     // fetch the results     
@@ -137,8 +186,9 @@ function updatePassword($old_password, $new_password, $confirm_password)
     $cur_password = $row["password"];
 
     // verify the old password
-    if ($cur_password !== $old_password) {
+    if ($cur_password !== md5($old_password)) {
         header("Location: changepass.php?error=2");
+        exit();
     }
 
     // validate the new password and confirm password fields
@@ -154,7 +204,7 @@ function updatePassword($old_password, $new_password, $confirm_password)
 
     // update the user's password in the database
     $stmt = $conn->prepare("UPDATE student_info SET password=? WHERE id=?");
-    $stmt->bind_param("si", $new_password, $id);
+    $stmt->bind_param("si", md5($new_password), $id);
 
     // execute the query
     $stmt->execute();
@@ -242,5 +292,93 @@ function uploadImg($file, $id, $type)
         header("Location: Profile.php?error=$em");
         exit();
     }
+}
+
+function uploadFile($file, $title, $description)
+{
+    include("connectDB.php");
+
+    $img_name = $file['name'];
+    $img_size = $file['size'];
+    $tmp_name = $file['tmp_name'];
+    $error = $file['error'];
+
+    if ($error === 0) {
+        if ($img_size > 1500000) {
+            $em = "the file size must below 1.5mb";
+            header("Location: homework.php?error=$em");
+            exit();
+        } else {
+            $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
+            $img_ex_lc = strtolower($img_ex);
+
+            $allowed_exs = array("jpg", "jpeg", "png", "rtf", "pdf", "docx", "txt");
+
+            if (in_array($img_ex_lc, $allowed_exs)) {
+                $new_img_name = uniqid("file-", true) . "." . $img_ex_lc;
+                $img_upload_path = "../upload/" . $new_img_name;
+                move_uploaded_file($tmp_name, $img_upload_path);
+
+                $sql = "INSERT INTO question(title, description, fileUpload) value (?, ?, ?)";
+                $ppsm = $conn->prepare($sql);
+                $ppsm->bind_param("sss",$title, $description, $new_img_name);
+                $ppsm->execute();
+                $ppsm->close();
+                $conn->close();
+                header("Location:homework.php?success");
+                exit();
+            } else {
+                $em = "can not upload this type of file";
+                header("Location:homework.php?error=$em");
+                exit();
+            }
+        }
+        echo $error;
+    // } else {
+    //     $em = "unknown error occurred!";
+    //     header("Location: homework.php?error=$em");
+    //     exit();
+    }
+}
+
+function addStudent($username_, $password_, $name, $email, $phoneNumber){
+    include("connectDB.php");
+    $sql = "INSERT INTO student_info (username, password, name, email, phoneNumber, imgProfile)
+    VALUES (?, ?, ?, ?, ?, ?);";
+    $ppsm = $conn->prepare($sql);
+    $imgProfile = "default.png";
+    $ppsm->bind_param("ssssss", $username_, $password_, $name, $email, $phoneNumber, $imgProfile);
+    $ppsm->execute();
+    $conn->close();
+    header("Location: list.php?success");
+    exit();
+}
+
+function deleteStudentByID($id){
+    include("connectDB.php");
+    $sql = "DELETE FROM student_info WHERE id = ?";
+    $ppsm = $conn->prepare($sql);
+    $ppsm->bind_param("i", $id);
+    $ppsm->execute();
+    $conn->close();
+    header("Location: list.php?success");
+    exit();
+}
+
+function getAllQuestion(){
+    include("connectDB.php");
+    $sql = "SELECT * FROM question";
+    $result = $conn->query($sql);
+    $homeworks = array();
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $homework = new Homework($row["id"], $row["title"], $row["description"], $row["fileUpload"]);
+            array_push($homeworks, $homework);
+        }
+    }
+
+    $conn->close();
+    return $homeworks;
 }
 ?>

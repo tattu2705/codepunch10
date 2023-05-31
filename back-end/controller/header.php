@@ -7,7 +7,7 @@
         </div>
         <ul class="nav-links">
             <li><a href="list.php">List</a></li>
-            <li><a href="#">Homework</a></li>
+            <li><a href="homework.php">Homework</a></li>
             <li><a href="#">Challenge</a></li>
         </ul>
         <div class="nav-icons">

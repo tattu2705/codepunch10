@@ -2,7 +2,7 @@
 include("../dal/DAO.php");
 session_start();
 if (isset($_POST["tc_dangnhap"])) {
-    $teacher = getTeacherByLogin($_POST["username"], $_POST["password"]);
+    $teacher = getTeacherByLogin($_POST["username"], md5($_POST["password"]));
     if ($teacher == null) {
         header("Location: login.php?msg=tc_failed");
         exit();

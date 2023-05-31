@@ -21,6 +21,16 @@
         }
     }
 
+    if(isset($_POST["saveAll"])){
+        if(isset($_FILES["imgProfile"]) && is_uploaded_file($_FILES["imgProfile"]["tmp_name"])){
+            uploadImg($_FILES["imgProfile"], $_POST["student"]->id, "student");
+        }
+
+        if(isset($_POST["email"]) || isset($_POST["phone"]) || isset($_POST["fullName"])|| isset($_POST["username"])){
+            updateAll($_POST["email"], $_POST["phone"], $_SESSION["account"]->id, "student",  "updateStudent.php", $_POST["fullName"], $_POST["username"]);
+        }
+    }
+
     
 
     if(isset($_POST["changepass"])){

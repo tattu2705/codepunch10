@@ -7,3 +7,6 @@ function open_modal(){
     element.style.display = 'flex';
 }
 
+if ( window.history.replaceState ) {
+    window.history.replaceState( null, null, window.location.href );
+  }
