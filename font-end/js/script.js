@@ -1,12 +1,16 @@
 let element = document.getElementsByClassName("overlay")[0];
 var button = document.getElementById('choose-file-button');
-function close_modal(){
+function close_modal() {
     element.style.display = 'none';
 }
-function open_modal(){
+function open_modal() {
     element.style.display = 'flex';
 }
 
-if ( window.history.replaceState ) {
-    window.history.replaceState( null, null, window.location.href );
-  }
+function confirmDelete() {
+    return confirm("Are you sure to delete?");
+}
+
+if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+}

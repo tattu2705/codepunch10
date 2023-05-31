@@ -57,11 +57,11 @@ require_once("checklogin.php");
                 <td>{$student->username}</td>
                 <td>{$student->password}</td>
                 <td>
-                        <form method='post' action='updateStudent.php'>
+                        <form method='post' action='updateStudent.php' >
                             <input type='hidden' name='id' value='{$student->id}'>
                             <input type='submit' value='update' name='update'>
                         </form>
-                        <form method='post' action='delete.php'>
+                        <form method='post' action='delete.php' onsubmit='return confirmDelete()'>
                             <input type='hidden' name='id' value='{$student->id}'>
                             <input type='submit' value='delete' name='delete'>
                         </form>
@@ -133,7 +133,9 @@ require_once("checklogin.php");
 
 
 
-    <script src="../../font-end/js/studentWeb.js"></script>
+    <script src="../../font-end/js/studentWeb.js">
+        
+    </script>
     <script src="../../font-end/js/script.js"></script>
 </body>
 
