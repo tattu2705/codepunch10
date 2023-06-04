@@ -29,7 +29,6 @@ require_once("checklogin.php");
 
 <body>
     <?php include('header.php') ?>
-    <h1>Hello <?php echo $_SESSION["account"]->fullName; ?></h1>
     
     <script src="../../font-end/js/studentWeb.js"></script>
     <script src="../../font-end/js/script.js"></script>

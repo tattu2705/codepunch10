@@ -1,0 +1,99 @@
+.upload-form {
+    margin: 20px auto;
+    width: 80%;
+    max-width: 500px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="file"] {
+    
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 10px;
+    display: block;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #3e8e41;
+}
+
+.flexbox{
+    display: flex;
+    flex-direction: row;
+}
+
+.challenge-item{
+    margin: auto;
+    width: 50%;
+}
+
+#challenge_name, #challenge_hint, #answer_or_message, #Message{
+    width: 100%;
+}
+
+.challenge-item{
+    text-align: center;
+    margin-bottom: 50px;
+}
+.challenge-item input[type="text"]{
+    width: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: #fff;
+    color: #212529;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+th,
+td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+th {
+    font-weight: bold;
+    text-transform: uppercase;
+    background-color: #f7f7f9;
+}
+
+tr:hover {
+    background-color: #f4f4f5;
+}

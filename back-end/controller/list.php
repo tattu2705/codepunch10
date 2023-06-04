@@ -18,7 +18,6 @@ require_once("checklogin.php");
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <title>Student Website</title>
@@ -96,6 +95,7 @@ require_once("checklogin.php");
                     <!-- Modal body -->
                     <div class="modal-body">
                         <form action="add.php" method="post">
+                            <input type="hidden" name="header" value="list.php">
                             <div class="form-group">
                                 <label for="ten_dang_nhap">Username</label>
                                 <input type="text" id="ten_dang_nhap" class="form-control" name="ten_dang_nhap">

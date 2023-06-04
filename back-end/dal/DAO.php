@@ -3,6 +3,7 @@
 include("../model/Student.php");
 include("../model/Teacher.php");
 include("../model/Homework.php");
+include("../model/Challenge.php");
 
 function getAll()
 {
@@ -294,7 +295,7 @@ function uploadImg($file, $id, $type)
     }
 }
 
-function uploadFile($file, $title, $description)
+function uploadHomework($file, $title, $description)
 {
     include("connectDB.php");
 
@@ -334,14 +335,59 @@ function uploadFile($file, $title, $description)
             }
         }
         echo $error;
-    // } else {
-    //     $em = "unknown error occurred!";
-    //     header("Location: homework.php?error=$em");
-    //     exit();
+    } else {
+        $em = "unknown error occurred!";
+        header("Location: homework.php?error=$em");
+        exit();
     }
 }
 
-function addStudent($username_, $password_, $name, $email, $phoneNumber){
+function uploadChallenge($title, $hint, $file, $answer, $mess){
+    include("connectDB.php");
+
+    $img_name = $file['name'];
+    $img_size = $file['size'];
+    $tmp_name = $file['tmp_name'];
+    $error = $file['error'];
+
+    if ($error === 0) {
+        if ($img_size > 1500000) {
+            $em = "the file size must below 1.5mb";
+            header("Location: challenge.php?error=$em");
+            exit();
+        } else {
+            $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
+            $img_ex_lc = strtolower($img_ex);
+
+            $allowed_exs = array("txt", "docs");
+
+            if (in_array($img_ex_lc, $allowed_exs)) {
+                $new_img_name = uniqid("file-", true) . "." . $img_ex_lc;
+                $img_upload_path = "../challenge/" . $new_img_name;
+                move_uploaded_file($tmp_name, $img_upload_path);
+
+                $sql = "INSERT INTO challenge(title, hint, challenge_file, answer, message) value (?, ?, ?, ?, ?)";
+                $ppsm = $conn->prepare($sql);
+                $ppsm->bind_param("sssss",$title, $hint, $new_img_name, $answer, $mess);
+                $ppsm->execute();
+                $ppsm->close();
+                $conn->close();
+                header("Location: challenge.php?success");
+                exit();
+            } else {
+                $em = "can not upload this type of file";
+                header("Location: challenge.php?error=$em");
+                exit();
+            }
+        }
+    } else {
+        $em = "unknown error occurred!";
+        header("Location: challenge.php?error=$em");
+        exit();
+    }
+}
+
+function addStudent($username_, $password_, $name, $email, $phoneNumber, $header){
     include("connectDB.php");
     $sql = "INSERT INTO student_info (username, password, name, email, phoneNumber, imgProfile)
     VALUES (?, ?, ?, ?, ?, ?);";
@@ -350,7 +396,7 @@ function addStudent($username_, $password_, $name, $email, $phoneNumber){
     $ppsm->bind_param("ssssss", $username_, $password_, $name, $email, $phoneNumber, $imgProfile);
     $ppsm->execute();
     $conn->close();
-    header("Location: list.php?success");
+    header("Location: $header?success");
     exit();
 }
 
@@ -381,4 +427,73 @@ function getAllQuestion(){
     $conn->close();
     return $homeworks;
 }
+function getAllChallenge(){
+    include("connectDB.php");
+    $sql = "SELECT * FROM challenge";
+    $result = $conn->query($sql);
+    $challenges = array();
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $challenge = new Challenge($row["id"], $row["title"], $row["hint"], $row["challenge_file"], $row["answer"], $row["message"]);
+            array_push($challenges, $challenge);
+        }
+    }
+    $conn->close();
+    return $challenges;
+}
+
+function upStudentPass($student_id, $challenge_id){
+    include("connectDB.php");
+    if($_SESSION["account"]->type === "student"){
+        $objects = getAllStudentPass();
+        foreach($objects as $object){
+            if($object[0] == $student_id && $object[3] == $challenge_id){
+                header("Location: challenge.php?you have do this challenge");
+                exit();
+            }
+        }
+        $sql = "INSERT INTO pass_challenge(student_id, challenge_id) VALUES(?, ?)";
+        $ppsm = $conn->prepare($sql);
+        $ppsm->bind_param("ii", $student_id, $challenge_id);
+        $ppsm->execute();
+        $conn->close();
+        header("Location: challenge.php?success=well done");
+    }
+    else{
+        header("Location: challenge.php?teacher");
+        exit();
+    }
+}
+
+function getAllStudentPass(){
+    include("connectDB.php");
+    $sql = "SELECT student_info.*, challenge.title, challenge.id AS challenge_id FROM pass_challenge
+    LEFT JOIN challenge on pass_challenge.challenge_id = challenge.id
+    LEFT JOIN student_info on student_info.id = pass_challenge.student_id;";
+    $result = $conn->query($sql);
+    $objects = array();
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $list = [$row["id"], $row["name"], $row["title"], $row["challenge_id"]];    
+            array_push($objects, $list);
+        }
+    }
+    $conn->close();
+    return $objects;
+}
+
+function checkUsernameDuplicate($username_){
+    include("connectDB.php");
+    $sql = "SELECT * FROM student_info";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            if($row["username"] == $username_)
+                return true;
+        }
+    }
+    return false;
+}
+
 ?>

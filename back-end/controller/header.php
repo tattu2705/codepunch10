@@ -8,7 +8,7 @@
         <ul class="nav-links">
             <li><a href="list.php">List</a></li>
             <li><a href="homework.php">Homework</a></li>
-            <li><a href="#">Challenge</a></li>
+            <li><a href="challenge.php">Challenge</a></li>
         </ul>
         <div class="nav-icons">
             <i class="fa-regular fa-bell" style="color: #000000;"></i>

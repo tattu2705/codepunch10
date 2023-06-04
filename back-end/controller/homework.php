@@ -41,10 +41,14 @@ require_once("checklogin.php");
         echo "<span style='color: red'>{$_GET['error']}</span>";
     }
     echo '</form>';
+    echo '<h2 style="text-align:center;">Danh sách sinh viên đã submit Homework</h2>
+    <form style="text-align: center;" method="post" action="">
+        <a class="check-homework" href="homework_view.php">Click here to view</a>
+        </form>';
     }
     ?>
     
-    <div class="homework-list">
+    <div style="text-align: center;" class="homework-list">
         <?php
         $homeworks = getAllQuestion();
         foreach ($homeworks as $homework) {
