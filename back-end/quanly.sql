@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `challenge` (
-  `id` int(100) NOT NULL,
+  `id` int(100) NOT NULL primary key,
   `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `hint` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `challenge_file` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
@@ -52,7 +52,7 @@ INSERT INTO `challenge` (`id`, `title`, `hint`, `challenge_file`, `answer`, `mes
 --
 
 CREATE TABLE `pass_challenge` (
-  `id` int(100) NOT NULL,
+  `id` int(100) NOT NULL primary key,
   `student_id` int(100) DEFAULT NULL,
   `challenge_id` int(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -76,7 +76,7 @@ INSERT INTO `pass_challenge` (`id`, `student_id`, `challenge_id`) VALUES
 CREATE TABLE `question` (
   `title` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `description` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `id` int(30) NOT NULL,
+  `id` int(30) NOT NULL primary key,
   `fileUpload` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -95,7 +95,7 @@ INSERT INTO `question` (`title`, `description`, `id`, `fileUpload`) VALUES
 --
 
 CREATE TABLE `student_info` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL primary key,
   `username` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -132,7 +132,7 @@ CREATE TABLE `teacher_info` (
   `email` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `phoneNumber` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `imgProfile` varchar(100) DEFAULT NULL,
-  `id` int(11) NOT NULL
+  `id` int(11) NOT NULL primary key
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -149,32 +149,6 @@ INSERT INTO `teacher_info` (`username`, `password`, `name`, `email`, `phoneNumbe
 --
 -- Indexes for table `challenge`
 --
-ALTER TABLE `challenge`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `pass_challenge`
---
-ALTER TABLE `pass_challenge`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `question`
---
-ALTER TABLE `question`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `student_info`
---
-ALTER TABLE `student_info`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `teacher_info`
---
-ALTER TABLE `teacher_info`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
