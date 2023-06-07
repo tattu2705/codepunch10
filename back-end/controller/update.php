@@ -27,7 +27,7 @@
         }
 
         if(isset($_POST["email"]) || isset($_POST["phone"]) || isset($_POST["fullName"])|| isset($_POST["username"])){
-            updateAll($_POST["email"], $_POST["phone"], $_SESSION["account"]->id, "student",  "updateStudent.php", $_POST["fullName"], $_POST["username"]);
+            updateAll($_POST["email"], $_POST["phone"], $_SESSION["st_id"], "student",  "updateStudent.php", $_POST["fullName"], $_POST["username"]);
         }
     }
 
