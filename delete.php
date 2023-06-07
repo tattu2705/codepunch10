@@ -1,5 +1,5 @@
 <?php 
-    include("../dal/DAO.php");
+    include("back-end/dal/DAO.php");
     session_start();
     require_once("checklogin.php");
     if($_POST["delete"] && $_POST["id"]){

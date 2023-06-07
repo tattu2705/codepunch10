@@ -28,7 +28,7 @@
 
         if (isset($_SESSION['account'])) {
             echo '<div class="profile-icon">
-                <img src="../image/' . $_SESSION['account']->imgProfile . '" alt="Profile Image">
+                <img src="back-end/image/' . $_SESSION['account']->imgProfile . '" alt="Profile Image">
                 <div class="dropdown">
                     <ul>
                     <li><a href="search.php">Search User</a></li>

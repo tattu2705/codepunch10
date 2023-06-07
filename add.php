@@ -1,5 +1,5 @@
 <?php
-    include("../dal/DAO.php");
+    include("back-end/dal/DAO.php");
     session_start();
 
     if(isset($_POST["add"]) && isset($_POST["header"]))

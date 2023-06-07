@@ -1,5 +1,5 @@
 <?php
-include("../dal/DAO.php");
+include("back-end/dal/DAO.php");
 session_start();
 if(isset($_POST["id"]))
 {
@@ -15,9 +15,9 @@ require_once("checklogin.php");
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../font-end/css/style.css">
-    <link rel="stylesheet" href="../../font-end/css/header.css">
-    <link rel="stylesheet" href="../../font-end/css/profile.css">
+    <link rel="stylesheet" href="font-end/css/style.css">
+    <link rel="stylesheet" href="font-end/css/header.css">
+    <link rel="stylesheet" href="font-end/css/profile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" integrity="sha512-SgaqKKxJDQ/tAUAAXzvxZz33rmn7leYDYfBP+YoMRSENhf3zJyx3SBASt/OfeQwBHA1nxMis7mM3EV/oYT6Fdw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -30,7 +30,7 @@ require_once("checklogin.php");
         <div class="profile-container">
             <h3>Avatar</h3>
             <form action="update.php" method="post" enctype="multipart/form-data">
-                <img src="../image/<?php echo $student->imgProfile ?>" alt="Profile Image" width="100" height="100">
+                <img src="back-end/image/<?php echo $student->imgProfile ?>" alt="Profile Image" width="100" height="100">
                 <input type="file" name="imgProfile" id="img" style="display:none">
                 <label class="choose-file" for="img">Choose file</label>
                 <input type='hidden' name='student' value='<?php $_POST["student"] ?>'>
@@ -76,8 +76,8 @@ require_once("checklogin.php");
 
 
 
-    <script src="../../font-end/js/studentWeb.js"></script>
-    <script src="../../font-end/js/script.js"></script>
+    <script src="font-end/js/studentWeb.js"></script>
+    <script src="font-end/js/script.js"></script>
 </body>
 
 </html>

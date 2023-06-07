@@ -1,9 +1,9 @@
 
 <?php
-include("../model/Student.php");
-include("../model/Teacher.php");
-include("../model/Homework.php");
-include("../model/Challenge.php");
+include("back-end/model/Student.php");
+include("back-end/model/Teacher.php");
+include("back-end/model/Homework.php");
+include("back-end/model/Challenge.php");
 
 function getAll()
 {

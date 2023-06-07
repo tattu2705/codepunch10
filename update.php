@@ -1,5 +1,5 @@
 <?php
-    require_once("../dal/DAO.php");
+    require_once("back-end/dal/DAO.php");
     session_start();
     if(isset($_POST["profileSave"])){
         if(isset($_FILES["imgProfile"]) && is_uploaded_file($_FILES["imgProfile"]["tmp_name"])){
