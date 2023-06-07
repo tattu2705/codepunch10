@@ -387,7 +387,7 @@ function uploadChallenge($title, $hint, $file, $answer, $mess){
     }
 }
 
-function addStudent($username_, $password_, $name, $email, $phoneNumber, $header){
+function addStudent($username_, $password_, $name, $email, $phoneNumber){
     include("connectDB.php");
     $sql = "INSERT INTO student_info (username, password, name, email, phoneNumber, imgProfile)
     VALUES (?, ?, ?, ?, ?, ?);";
@@ -396,8 +396,6 @@ function addStudent($username_, $password_, $name, $email, $phoneNumber, $header
     $ppsm->bind_param("ssssss", $username_, $password_, $name, $email, $phoneNumber, $imgProfile);
     $ppsm->execute();
     $conn->close();
-    header("Location: $header?success");
-    exit();
 }
 
 function deleteStudentByID($id){

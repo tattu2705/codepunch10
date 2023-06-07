@@ -66,6 +66,10 @@ session_start();
                 if (isset($_GET['msg']) && $_GET['msg'] == 'st_failed') {
                     echo '<p style="color:red">Tên đăng nhập hoặc mật khẩu không chính xác.</p>';
                 }
+                if(isset($_GET['success']))
+                {
+                    echo "<p style='color:green'>{$_GET['success']}</p>";
+                }
                 ?>
             </form>
         </div>
