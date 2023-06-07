@@ -64,13 +64,7 @@ require_once("checklogin.php");
                 }
                 ?>
             </form>
-            <!-- public $id;
-                public $username;
-                public $password;
-                public $fullName;
-                public $email;
-                public $phoneNumber;
-                public $imgProfile; -->
+            
         </div>
             
     </div>
