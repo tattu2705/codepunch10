@@ -28,7 +28,6 @@ require_once("checklogin.php");
                 <img src="../image/<?php echo $_SESSION["account"]->imgProfile ?>" alt="Profile Image" width="100" height="100">
                 <input type="file" name="imgProfile" id="img" style="display:none">
                 <label class="choose-file" for="img">Choose file</label>
-                <div id="remove-button">Remove</div>
                 <div class="flexb">
                     <div>
                         <label for="fullName">Full Name:</label><br>

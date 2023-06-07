@@ -33,7 +33,6 @@ require_once("checklogin.php");
                 <img src="../image/<?php echo $student->imgProfile ?>" alt="Profile Image" width="100" height="100">
                 <input type="file" name="imgProfile" id="img" style="display:none">
                 <label class="choose-file" for="img">Choose file</label>
-                <button id="remove-button">Remove</button>
                 <input type='hidden' name='student' value='<?php $_POST["student"] ?>'>
                 <div class="flexb">
                     <div>
