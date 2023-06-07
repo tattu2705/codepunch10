@@ -133,7 +133,6 @@ function updateAll($newEmail, $newPhone, $id, $type, $header, $name, $username_)
     $stmt->execute();
     $stmt->close();
     $conn->close();
-    $_SESSION["account"] = getById($id, $_SESSION["account"]->type);
     header("Location: {$header}?success=1");
     exit();
 }
